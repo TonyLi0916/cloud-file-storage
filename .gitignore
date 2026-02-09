@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+
+# Cache
+.cache
+.vite/
+
+# Editor
+.vscode/
+.history/
+
+# Platform
+.DS_Store
