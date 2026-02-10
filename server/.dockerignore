@@ -1,13 +1,10 @@
 # Dependencies (will be installed fresh in container)
 node_modules
 
-# Build output (will be generated during build)
-dist
-
-# Development files
+# Environment files (passed via docker-compose)
 .env
 .env.local
-.env.development
+.env.production
 
 # Git
 .git
