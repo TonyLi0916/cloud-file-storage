@@ -5,10 +5,8 @@ export default function FileList({ files, onDelete }) {
   const [newFileNames, setNewFileNames] = useState(new Set());
   const [prevFileCount, setPrevFileCount] = useState(0);
 
-  // Track newly uploaded files
   useEffect(() => {
     if (files.length > prevFileCount) {
-      // New file(s) added - mark the newest one as new (now at index 0)
       const newestFile = files[0];
       setNewFileNames(new Set([newestFile.name]));
 
@@ -30,7 +28,9 @@ export default function FileList({ files, onDelete }) {
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-gray-600 mb-3">{files.length} file{files.length !== 1 ? "s" : ""}</p>
+      <p className="text-sm text-gray-600 mb-3">
+        {files.length} file{files.length !== 1 ? "s" : ""}
+      </p>
       {files.map((file) => (
         <FileItem
           key={file.name}

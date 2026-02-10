@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 * {
   box-sizing: border-box;
@@ -12,7 +14,7 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0a0a15 100%);
   min-height: 100vh;
 }
 
@@ -32,4 +34,12 @@ body {
 
 .animate-pop-in {
   animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.open-sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
 }

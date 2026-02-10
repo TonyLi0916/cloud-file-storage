@@ -61,11 +61,11 @@ export default function App() {
     <div className="min-h-screen py-8">
       <div className="max-w-4xl mx-auto px-4">
         <header className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-white drop-shadow-lg">
+          <h1 className="open-sans text-4xl font-bold text-white drop-shadow-lg">
             Cloud File Storage
           </h1>
-          <p className="text-white/90 mt-2">
-            Upload and manage your files in the cloud
+          <p className="montserrat text-white/90 mt-2">
+            Upload and manage your files in the cloud ☁️
           </p>
         </header>
 

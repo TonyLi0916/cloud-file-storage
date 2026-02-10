@@ -14,14 +14,14 @@ export default function FileItem({ file, onDelete, isNew }) {
         flex items-center justify-between p-4 rounded-lg
         bg-white/40 backdrop-blur-md border border-white/60
         shadow-lg hover:bg-white/50 transition-all
-        ${isNew ? 'animate-pop-in' : ''}
+        ${isNew ? "animate-pop-in" : ""}
       `}
     >
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-gray-900 truncate">
           {file.name}
         </p>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-400">
           {formatFileSize(file.size)} • {formatDate(file.lastModified)}
         </p>
       </div>
