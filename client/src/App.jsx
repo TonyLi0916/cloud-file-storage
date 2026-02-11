@@ -64,7 +64,7 @@ export default function App() {
             Cloud File Storage
           </h1>
           <p className="montserrat text-white/90 mt-2">
-            Upload and manage your files
+            Upload and manage your files in a stateless cloud ☁️ !
           </p>
         </header>
 
