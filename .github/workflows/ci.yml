@@ -1,0 +1,80 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build and Test Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build client image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          file: ./client/Dockerfile
+          push: false
+          tags: cloud-file-storage-client:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build server image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          push: false
+          tags: cloud-file-storage-server:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test server health endpoint
+        run: |
+          # Start containers
+          docker compose up -d
+
+          # Wait for server to be healthy
+          echo "Waiting for server to be healthy..."
+          timeout 60 bash -c 'until docker inspect cloud-storage-server --format="{{.State.Health.Status}}" | grep -q "healthy"; do sleep 2; done'
+
+          # Test health endpoint
+          echo "Testing health endpoint..."
+          response=$(curl -s http://localhost:3000/health)
+
+          if echo "$response" | grep -q "ok"; then
+            echo "Health check passed!"
+            echo "Response: $response"
+          else
+            echo "Health check failed!"
+            echo "Response: $response"
+            docker logs cloud-storage-server
+            exit 1
+          fi
+
+      - name: Test frontend serving
+        run: |
+          echo "Testing frontend..."
+          response=$(curl -s http://localhost:5173)
+
+          if echo "$response" | grep -q "Cloud File Storage"; then
+            echo "Frontend is serving correctly!"
+          else
+            echo "Frontend test failed!"
+            docker logs cloud-storage-client
+            exit 1
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker compose down -v
