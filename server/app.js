@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration for production
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "https://fabulous-empathy-production-1d3c.up.railway.app",
+  origin: process.env.FRONTEND_URL || "https://sweet-dedication-production.up.railway.app",
   methods: ["GET", "POST", "DELETE", "OPTIONS"],
 };
 app.use(cors(corsOptions));

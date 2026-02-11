@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://sweet-dedication-production.up.railway.app/api/files";
+const API_BASE_URL = "https://fabulous-empathy-production-1d3c.up.railway.app/api/files";
 
 export async function getFiles() {
   try {
