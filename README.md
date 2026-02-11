@@ -206,19 +206,6 @@ GitHub Actions automatically runs on every push:
 
 ---
 
-## 📊 Resume Bullet Points
-
-Use these when discussing this project:
-
-- ✅ "Built full-stack cloud file storage with **React 19**, **Express**, and **Azure Blob Storage**"
-- ✅ "Implemented **containerized deployment** with **multi-stage Docker builds** optimized to <200MB"
-- ✅ "Configured **CI/CD pipeline** with **GitHub Actions** for automated testing and deployment"
-- ✅ "Designed **stateless architecture** for horizontal scalability in cloud environments"
-- ✅ "Applied **security best practices** including non-root users and health monitoring"
-- ✅ "Achieved **5-10x faster builds** using Docker layer caching in CI/CD"
-
----
-
 ## 📝 License
 
 This project is open source and available under the [MIT License](LICENSE).
