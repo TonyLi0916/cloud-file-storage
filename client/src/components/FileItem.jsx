@@ -21,7 +21,7 @@ export default function FileItem({ file, onDelete, isNew }) {
         <p className="text-sm font-medium text-gray-900 truncate">
           {file.name}
         </p>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-300">
           {formatFileSize(file.size)} • {formatDate(file.lastModified)}
         </p>
       </div>
