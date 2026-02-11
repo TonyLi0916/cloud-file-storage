@@ -54,10 +54,10 @@ cloud-file-storage/
 │   └── nginx.conf         # SPA routing + caching
 │
 ├── server/                # Express backend
-│   ├── controllers/       # Request handlers
+│   ├── controllers/       # Files request handlers
 │   ├── middleware/        # Upload, error handling
-│   ├── routes/            # API routes
-│   ├── services/          # Azure Blob Storage integration
+│   ├── routes/            # Files API routes
+│   ├── services/          # Azure Blob Storage
 │   ├── app.js             # Express setup
 │   ├── server.js          # Server entry point
 │   └── Dockerfile         # Multi-stage build (production deps only)
@@ -91,7 +91,6 @@ cd cloud-file-storage
 # Create .env file in root directory
 AZURE_STORAGE_CONNECTION_STRING=your_connection_string_here
 AZURE_CONTAINER_NAME=files
-
 ```
 
 ### 3. Build and Run with Docker

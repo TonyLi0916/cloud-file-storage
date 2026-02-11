@@ -9,7 +9,6 @@ export default function App() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Load files on mount
   useEffect(() => {
     loadFiles();
   }, []);
@@ -65,7 +64,7 @@ export default function App() {
             Cloud File Storage
           </h1>
           <p className="montserrat text-white/90 mt-2">
-            Upload and manage your files in the cloud ☁️
+            Upload and manage your files
           </p>
         </header>
 

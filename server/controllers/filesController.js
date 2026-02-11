@@ -11,12 +11,10 @@ exports.getFiles = async (req, res, next) => {
 
 exports.uploadFile = async (req, res, next) => {
   try {
-    // Check if file exists in request
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    // Upload to Azure
     const fileData = await azureStorage.uploadFile(
       req.file.buffer,
       req.file.originalname,

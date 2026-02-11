@@ -38,6 +38,14 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Create test environment file
+        run: |
+          cat > .env << EOF
+          AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=test;AccountKey=dGVzdGtleQ==;EndpointSuffix=core.windows.net
+          AZURE_CONTAINER_NAME=files
+          FRONTEND_URL=http://localhost:5173
+          EOF
+
       - name: Test server health endpoint
         run: |
           # Start containers
@@ -45,17 +53,26 @@ jobs:
 
           # Wait for server to be healthy
           echo "Waiting for server to be healthy..."
-          timeout 60 bash -c 'until docker inspect cloud-storage-server --format="{{.State.Health.Status}}" | grep -q "healthy"; do sleep 2; done'
+          if timeout 60 bash -c 'until docker inspect cloud-storage-server --format="{{.State.Health.Status}}" | grep -q "healthy"; do sleep 2; done'; then
+            echo "✓ Server is healthy!"
+          else
+            echo "✗ Server health check timed out or failed"
+            echo "Server logs:"
+            docker logs cloud-storage-server
+            echo "Server status:"
+            docker inspect cloud-storage-server --format="{{.State.Health.Status}}"
+            exit 1
+          fi
 
           # Test health endpoint
           echo "Testing health endpoint..."
           response=$(curl -s http://localhost:3000/health)
 
           if echo "$response" | grep -q "ok"; then
-            echo "Health check passed!"
+            echo "✓ Health check passed!"
             echo "Response: $response"
           else
-            echo "Health check failed!"
+            echo "✗ Health check failed!"
             echo "Response: $response"
             docker logs cloud-storage-server
             exit 1
