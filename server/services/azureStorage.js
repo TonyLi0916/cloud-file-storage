@@ -7,19 +7,9 @@ const containerName = process.env.AZURE_CONTAINER_NAME;
 let blobServiceClient = null;
 let containerClient = null;
 
-// Initialize Azure Storage with error handling to prevent server crashes
-// This allows the server to start in CI/test environments
-try {
-  if (connectionString && containerName && !connectionString.includes("AccountName=test")) {
-    blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
-    containerClient = blobServiceClient.getContainerClient(containerName);
-    console.log("✓ Azure Storage initialized successfully");
-  } else {
-    console.log("⚠ Azure Storage not configured (test mode)");
-  }
-} catch (error) {
-  console.warn("⚠ Failed to initialize Azure Storage:", error.message);
-  console.warn("Server will run but file operations will fail");
+if (connectionString && containerName) {
+  blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+  containerClient = blobServiceClient.getContainerClient(containerName);
 }
 
 async function uploadFile(fileBuffer, fileName, mimeType) {
