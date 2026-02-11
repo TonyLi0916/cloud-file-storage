@@ -1,23 +1,23 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
 require("dotenv").config();
 
-// Initialize Azure Blob Service Client
 const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
 const containerName = process.env.AZURE_CONTAINER_NAME;
 
-if (!connectionString || !containerName) {
-  throw new Error(
-    "Azure Storage connection string or container name not configured",
-  );
+let blobServiceClient = null;
+let containerClient = null;
+
+if (connectionString && containerName) {
+  blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+  containerClient = blobServiceClient.getContainerClient(containerName);
 }
 
-const blobServiceClient =
-  BlobServiceClient.fromConnectionString(connectionString);
-const containerClient = blobServiceClient.getContainerClient(containerName);
-
 async function uploadFile(fileBuffer, fileName, mimeType) {
+  if (!containerClient) {
+    throw new Error("Azure Storage not configured");
+  }
+
   try {
-    // Generate unique filename with timestamp to prevent collisions
     const uniqueFileName = `${Date.now()}-${fileName}`;
     const blockBlobClient = containerClient.getBlockBlobClient(uniqueFileName);
 
@@ -41,10 +41,13 @@ async function uploadFile(fileBuffer, fileName, mimeType) {
 }
 
 async function listFiles() {
+  if (!containerClient) {
+    throw new Error("Azure Storage not configured");
+  }
+
   try {
     const files = [];
 
-    // Iterate through all blobs in the container
     for await (const blob of containerClient.listBlobsFlat()) {
       files.push({
         name: blob.name,
@@ -62,6 +65,10 @@ async function listFiles() {
 }
 
 async function downloadFile(blobName) {
+  if (!containerClient) {
+    throw new Error("Azure Storage not configured");
+  }
+
   try {
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
     const downloadResponse = await blockBlobClient.download();
@@ -78,6 +85,10 @@ async function downloadFile(blobName) {
 }
 
 async function deleteFile(blobName) {
+  if (!containerClient) {
+    throw new Error("Azure Storage not configured");
+  }
+
   try {
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
     await blockBlobClient.delete();
